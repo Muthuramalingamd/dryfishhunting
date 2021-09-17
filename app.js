@@ -1,19 +1,61 @@
 var express = require('express'),
-    aws = require('aws-sdk'),
-    multer = require('multer'),
-    multerS3 = require('multer-s3');
-var mongoose = require("mongoose");
+    AWS = require('aws-sdk'),
+    multer = require('multer');
+    var mongoose = require("mongoose");
 const {ObjectId} = require('mongodb');
 const bodyParser = require('body-parser')
+const s3Client = new AWS.S3({
+    accessKeyId: 'AKIAZFFOFJWZVZ2J7JGU',
+    secretAccessKey: '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',
+    region :'us-east-2'
+});
+const app = express();
+var fs = require('fs');
 
-const app = express()
+var http = require("http");
+var server = http.createServer(app);
+const uploadParams = {
+         Bucket: 's2cbazaar', 
+         Key: '', // pass key
+         Body: null, // pass file body
+         ContentType: '', ACL: 'public-read'
+};
+
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(express.urlencoded({extended: true})); 
-app.use(express.json());   
-// parse application/json
-app.use(bodyParser.json())
+
+app.use(multer({ dest: './public/documents/'}).any());
+
+var storage = multer.diskStorage({ //multers disk storage settings
+  destination: function (req, file, cb) {
+      cb(null, '../../public/documents/')
+  },
+  rename:  function (fieldname, filename, req, res) {
+      console.log('ici');
+  },
+  filename: function (req, file, cb) {
+crypto.pseudoRandomBytes(16, function (err, raw) {
+cb(null, raw.toString('hex') + Date.now() + '.' + mime.extension(file.mimetype));
+});}
+});
+// default options, immediately start reading from the request stream and
+// parsing
+
+// any valid Busboy options can be passed in also
+
+ 
+
+var upload = multer({ storage: storage }).single('file');
+
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(function(err, req, res, next) {
+        res.header("Access-Control-Allow-Origin", "https://www.sandbox.paypal.com");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next(err);
+    });
 mongoose.connect('mongodb+srv://dfhunt:dfhunt@cluster0.kqsgz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',{ useNewUrlParser: true })
 //uP3URjwCI8HTlzYtMNriqyEnhacpABvsXd12KZ75gGSe9O6LmkyYQ1tPj9dWek3bRrza0psU56nfTNIJ
 var unirest = require("unirest");
@@ -41,26 +83,29 @@ function fast2Smscall(bodyObj){
   });
 }
 
-//mongoose.connect("mongodburl");
-aws.config.update({
-    secretAccessKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    accessKeyId: 'XXXXXXXXXXXXXXX',
-    region: 'us-east-1'
-});
 
- var   s3 = new aws.S3();
+
 
    
 
-var upload = multer({
-    storage: multerS3({
-        s3: s3,
-        bucket: 'bucket-name',
-        key: function (req, file, cb) {
-            console.log(file);
-            cb(null, file.originalname); //use Date.now() for unique file keys
-        }
-    })
+app.post('/api/file/upload',(req,res) => {
+  console.log("123",req.files);
+
+  const params = uploadParams;
+console.log("log",req.file,req.files);
+  uploadParams.Key = req.files[0].originalname;
+  uploadParams.ContentType = req.files[0].mimetype;
+var file = req.files[0];
+  fs.readFile(file.path, function (err, data) {
+    uploadParams.Body =data;
+  s3Client.upload(params, (err, data) => {
+      if (err) {
+          res.status(500).json({error:"Error -> " + err});
+      }
+      res.json({message: 'File uploaded successfully'
+      , 'location': data.Location});
+  });
+})
 });
 
 //open in browser to see upload form
@@ -156,11 +201,8 @@ app.post('/verifyotp',  function (req, res) {
     })
 });
 
-//use by upload form
-app.post('/upload', upload.array('upl',1), function (req, res, next) {
-    res.send("Uploaded!");
-});
 
-app.listen(3000, function () {
+
+server.listen(3000, function () {
     console.log('Example app listening on port 3000!');
 });
