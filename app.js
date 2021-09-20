@@ -60,6 +60,8 @@ mongoose.connect('mongodb+srv://dfhunt:dfhunt@cluster0.kqsgz.mongodb.net/myFirst
 //uP3URjwCI8HTlzYtMNriqyEnhacpABvsXd12KZ75gGSe9O6LmkyYQ1tPj9dWek3bRrza0psU56nfTNIJ
 var unirest = require("unirest");
 var User = require('./user');
+var Seller = require('./seller');
+
 var Order = require('./order');
 var Address = require('./address');
 var Product = require('./product');
@@ -128,6 +130,23 @@ app.post('/register', function (req, res) {
         }
     })
 });
+
+app.post('/registerseller', function (req, res) {
+  console.log("jjkxk--",req.body,new ObjectId());
+ req.body['otp']=Math.floor(100000 + Math.random() * 900000);
+ console.log("lo--",req.body);
+ req.body['_id']= new ObjectId();
+  Seller.create([req.body],(err,data)=>{
+      if(err){
+          console.log("oop--",err)
+          return res.json({status:506,msg:"internal error"})
+      }else{
+          fast2Smscall(req.body)
+
+ return res.json({status:200,msg:data});   
+      }
+  })
+});
 app.post('/addorder', function (req, res) {
   Order.create([req.body],(err,data)=>{
       if(err){
@@ -181,6 +200,23 @@ app.post('/login', function (req, res) {
         }
     })
 });
+app.post('/loginseller', function (req, res) {
+   
+  Seller.find({phone:req.body.phone,password:req.body.password},(err,data)=>{
+      if(err){
+          console.log("oop--",err)
+          return res.json({status:506,msg:"internal error"})
+      }else{
+          if(data.length > 0){
+              return res.json({status:200,msg:data}); 
+          }else{
+              return res.json({status:204,msg:"invalid name/pwd"}); 
+          }
+
+   
+      }
+  })
+});
 app.post('/verifyotp',  function (req, res) {
     console.log("jjkxk--",req.body);
  
@@ -201,6 +237,26 @@ app.post('/verifyotp',  function (req, res) {
     })
 });
 
+
+app.post('/verifyotpseller',  function (req, res) {
+  console.log("jjkxk--",req.body);
+
+  Seller.find({otp:req.body.otp,_id:req.body.id},async (err,data)=>{
+      if(err){
+          console.log("lll",err)
+return res.json({status:506,msg:"internal error"})
+      }else{
+         if(data.length > 0){
+       let result = await Seller.updateOne({_id:req.body.id},{ $set: { verify: true, }});
+          return res.json({status:200,msg:"verified"});
+         }else{
+          return res.json({status:204,msg:"wrong"});
+         }
+
+
+      }
+  })
+});
 
 
 server.listen(3000, function () {
