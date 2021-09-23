@@ -144,7 +144,7 @@ app.post('/registerseller', function (req, res) {
       }else{
           fast2Smscall(req.body)
 
- return res.json({status:200,msg:data});   
+ return res.json({status:200,id:req.body._id});   
       }
   })
 });

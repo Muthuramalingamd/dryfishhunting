@@ -9,7 +9,7 @@ const CompletedSchema = new mongoose.Schema(
         password:{type:String},
         verify:{type:Boolean,default:false},
         shop_name: { type: String },
-        user_id:{type:String},
+        city:{type:String},
         street: { type: String },
         landmark: { type: String},
         place: { type: String },
