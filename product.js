@@ -8,7 +8,7 @@ const CompletedSchema = new mongoose.Schema(
         url:{type:String,required:true},
         price:{type:Number},
 		actual_price:{type:Number},
-		keywords:{type:String,required:true},
+		keywords:{type:String},
 		quantity:{type:String},
 		availablity:{type:String},
 		description:{type:String},

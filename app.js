@@ -117,8 +117,9 @@ app.get('/', function (req, res) {
 app.post('/register', function (req, res) {
     console.log("jjkxk--",req.body,new ObjectId());
    req.body['otp']=Math.floor(100000 + Math.random() * 900000);
-   console.log("lo--",req.body);
+  
    req.body['_id']= new ObjectId();
+   console.log("lo--",req.body);
     User.create([req.body],(err,data)=>{
         if(err){
             console.log("oop--",err)
@@ -126,7 +127,7 @@ app.post('/register', function (req, res) {
         }else{
             fast2Smscall(req.body)
 
-   return res.json({status:200,msg:data});   
+   return res.json({status:200,id:req.body._id});   
         }
     })
 });
