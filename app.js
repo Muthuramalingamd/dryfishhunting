@@ -104,8 +104,7 @@ var file = req.files[0];
       if (err) {
           res.status(500).json({error:"Error -> " + err});
       }
-      res.json({message: 'File uploaded successfully'
-      , 'location': data.Location});
+      res.send( data.Location).status(200);
   });
 })
 });
