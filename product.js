@@ -6,7 +6,7 @@ const CompletedSchema = new mongoose.Schema(
 		
 		name: { type: String, required: true },
         url:{type:String,required:true},
-        price:{type:Number},
+        price:{type:String},
 		actual_price:{type:Number},
 		keywords:{type:String},
 		quantity:{type:String},
