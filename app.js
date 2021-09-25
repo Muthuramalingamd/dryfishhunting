@@ -5,8 +5,8 @@ var express = require('express'),
 const {ObjectId} = require('mongodb');
 const bodyParser = require('body-parser')
 const s3Client = new AWS.S3({
-    accessKeyId: 'AKIAZFFOFJWZVZ2J7JGU',
-    secretAccessKey: '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',
+    accessKeyId: 'AKIAVFAHRU2I42GN3L5S',
+    secretAccessKey: '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',
     region :'us-east-2'
 });
 const app = express();
@@ -15,7 +15,7 @@ var fs = require('fs');
 var http = require("http");
 var server = http.createServer(app);
 const uploadParams = {
-         Bucket: 's2cbazaar', 
+         Bucket: 'testdrivefordkm', 
          Key: '', // pass key
          Body: null, // pass file body
          ContentType: '', ACL: 'public-read'
