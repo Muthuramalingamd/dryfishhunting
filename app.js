@@ -148,7 +148,19 @@ app.post('/registerseller', function (req, res) {
   })
 });
 app.post('/addorder', function (req, res) {
+  console.log("p00");
+  req.body.created_on = new Date();
   Order.create([req.body],(err,data)=>{
+      if(err){
+        console.log(err);
+        return res.json({status:506,msg:"internal error"})
+      }else{
+        return res.json({status:200,msg:'ordered successfully'}); 
+      }
+  })
+});
+app.post('/addaddress', function (req, res) {
+  Address.create([req.body],(err,data)=>{
       if(err){
         return res.json({status:506,msg:"internal error"})
       }else{
@@ -156,6 +168,7 @@ app.post('/addorder', function (req, res) {
       }
   })
 });
+
 app.get('/getorder', function (req, res) {
     Order.find({_id:req.params.userid},(err,data)=>{
         if(err){
