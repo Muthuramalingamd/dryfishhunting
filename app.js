@@ -178,6 +178,16 @@ app.get('/getorder', function (req, res) {
         }
     })
   });
+
+  app.get('/getorder:id', function (req, res) {
+    Order.find({_id:req.params.id},(err,data)=>{
+        if(err){
+          return res.json({status:506,msg:"internal error"})
+        }else{
+          return res.json({status:200,msg:data}); 
+        }
+    })
+  });
   app.get('/getproduct', function (req, res) {
     Product.find({},(err,data)=>{
         if(err){
