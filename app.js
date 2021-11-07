@@ -60,6 +60,7 @@ mongoose.connect('mongodb+srv://dfhunt:dfhunt@cluster0.kqsgz.mongodb.net/myFirst
 //uP3URjwCI8HTlzYtMNriqyEnhacpABvsXd12KZ75gGSe9O6LmkyYQ1tPj9dWek3bRrza0psU56nfTNIJ
 var unirest = require("unirest");
 var User = require('./user');
+var DairyUser = require('./dairyuser');
 var Seller = require('./seller');
 
 var Order = require('./order');
@@ -129,6 +130,25 @@ app.post('/register', function (req, res) {
    return res.json({status:200,id:req.body._id});   
         }
     })
+});
+
+
+app.post('/dairyregister', function (req, res) {
+  console.log("jjkxk--",req.body,new ObjectId());
+ req.body['otp']=Math.floor(100000 + Math.random() * 900000);
+
+ req.body['_id']= new ObjectId();
+ console.log("lo--",req.body);
+ DairyUser.create([req.body],(err,data)=>{
+      if(err){
+          console.log("oop--",err)
+          return res.json({status:506,msg:"internal error"})
+      }else{
+          fast2Smscall(req.body)
+
+ return res.json({status:200,id:req.body._id});   
+      }
+  })
 });
 
 app.post('/registerseller', function (req, res) {
@@ -223,6 +243,25 @@ app.post('/login', function (req, res) {
         }
     })
 });
+
+app.post('/dairylogin', function (req, res) {
+   
+  DairyUser.find({phone:req.body.phone,password:req.body.password,verify:true},(err,data)=>{
+      if(err){
+          console.log("oop--",err)
+          return res.json({status:506,msg:"internal error"})
+      }else{
+          if(data.length > 0){
+              return res.json({status:200,msg:data}); 
+          }else{
+              return res.json({status:204,msg:"invalid name/pwd"}); 
+          }
+
+   
+      }
+  })
+});
+
 app.post('/loginseller', function (req, res) {
    
   Seller.find({phone:req.body.phone,password:req.body.password},(err,data)=>{
@@ -260,6 +299,26 @@ app.post('/verifyotp',  function (req, res) {
     })
 });
 
+
+app.post('/dairyverifyotp',  function (req, res) {
+  console.log("jjkxk--",req.body);
+
+  DairyUser.find({otp:req.body.otp,_id:req.body.id},async (err,data)=>{
+      if(err){
+          console.log("lll",err)
+return res.json({status:506,msg:"internal error"})
+      }else{
+         if(data.length > 0){
+       let result = await DairyUser.updateOne({_id:req.body.id},{ $set: { verify: true, }});
+          return res.json({status:200,msg:"verified"});
+         }else{
+          return res.json({status:204,msg:"wrong"});
+         }
+
+
+      }
+  })
+});
 
 app.post('/verifyotpseller',  function (req, res) {
   console.log("jjkxk--",req.body);
