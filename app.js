@@ -9,6 +9,7 @@ const s3Client = new AWS.S3({
     secretAccessKey: 'hOGZaoEES2U+3vg3zzra3wpCiaI6UvRXKunJaCLr',
     region :'us-east-2'
 });
+var Request = require("request");
 const app = express();
 var fs = require('fs');
 
@@ -22,6 +23,13 @@ const uploadParams = {
 };
 
 
+function test(){
+  Request('http://www.google.com', function (error, response, body) {
+  console.error('error:', error); // Print the error if one occurred
+  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+  console.log('body:', body); // Print the HTML for the Google homepage.
+});
+};
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -62,6 +70,7 @@ var unirest = require("unirest");
 var User = require('./user');
 var DairyUser = require('./dairyuser');
 var Seller = require('./seller');
+var News = require('./news');
 
 var Order = require('./order');
 var Address = require('./address');
@@ -87,9 +96,33 @@ function fast2Smscall(bodyObj){
 }
 
 
+app.get('/newsall',(req,res)=>{
+  News.find({},(err,data)=>{
+    if (err) {
+      res.status(500).json({error:"Error -> " + err});
+  }
+  res.status(200).json({status:200,msg:data});
+   })
+ })
 
+   app.post('/news',(req,res)=>{
+    Request('https://newsapi.in/newsapi/news.php?key=05t00FVJ5AUMTycgVMstSqxLv4Z4dc&category=tamil', function (error, response, body) {
+      console.error('error:', error); // Print the error if one occurred
+      console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+      console.log('body:', JSON.parse(body)); 
+      let x = JSON.parse(body);// Print the HTML for the Google homepage.
+      if(x){
+          let objectData = x.News.filter((ele)=>ele.published_date == '2021-11-20');
+             News.insertMany(objectData,(err,data)=>{
+              if (err) {
+                res.status(500).json({error:"Error -> " + err});
+            }
+            res.send( "success").status(200);
+             })
 
-   
+      }
+    });
+   })
 
 app.post('/api/file/upload',(req,res) => {
   console.log("123",req.files);
