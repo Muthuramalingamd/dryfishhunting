@@ -71,7 +71,10 @@ var User = require('./user');
 var DairyUser = require('./dairyuser');
 var Seller = require('./seller');
 var News = require('./news');
-
+var Sports = require('./sports');
+var Politics = require('./politics');
+var Business = require('./business');
+var News = require('./news');
 var Order = require('./order');
 var Address = require('./address');
 var Product = require('./product');
@@ -94,7 +97,16 @@ function fast2Smscall(bodyObj){
     console.log(res.body);
   });
 }
+var CronJob = require('cron').CronJob;
+var job = new CronJob('00 01 6 * * *', function() {
+  console.log('You will see this message every second');
+  getAllNews();
+  getAllSports();
+  getAllBusiness();
+  getAllPolitics();
 
+}, null, true, 'America/Los_Angeles');
+job.start();
 
 app.get('/newsall',(req,res)=>{
   News.find({},(err,data)=>{
@@ -105,30 +117,138 @@ app.get('/newsall',(req,res)=>{
    })
  })
 
-   app.post('/news',(req,res)=>{
-    Request('https://newsapi.in/newsapi/news.php?key=05t00FVJ5AUMTycgVMstSqxLv4Z4dc&category=tamil', function (error, response, body) {
-      console.error('error:', error); // Print the error if one occurred
-      console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-      console.log('body:', JSON.parse(body)); 
-      let x = JSON.parse(body);// Print the HTML for the Google homepage.
-      if(x){
-          let objectData = x.News.filter((ele)=>ele.published_date == '2021-11-20');
-             News.insertMany(objectData,(err,data)=>{
-              if (err) {
-                res.status(500).json({error:"Error -> " + err});
-            }
-            res.send( "success").status(200);
-             })
-
-      }
-    });
+ app.get('/newssports',(req,res)=>{
+  Sports.find({},(err,data)=>{
+    if (err) {
+      res.status(500).json({error:"Error -> " + err});
+  }
+  res.status(200).json({status:200,msg:data});
    })
+ })
+ app.get('/newsbusiness',(req,res)=>{
+  Business.find({},(err,data)=>{
+    if (err) {
+      res.status(500).json({error:"Error -> " + err});
+  }
+  res.status(200).json({status:200,msg:data});
+   })
+ })
+ app.get('/newspolitics',(req,res)=>{
+  Politics.find({},(err,data)=>{
+    if (err) {
+      res.status(500).json({error:"Error -> " + err});
+  }
+  res.status(200).json({status:200,msg:data});
+   })
+ })
+
+
+
+ function getAllNews(){
+  Request('https://newsapi.in/newsapi/news.php?key=05t00FVJ5AUMTycgVMstSqxLv4Z4dc&category=tamil', function (error, response, body) {
+    console.error('error:', error); // Print the error if one occurred
+  //  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+  //  console.log('body:', JSON.parse(body)); 
+    var dateObj = new Date();
+var month = dateObj.getUTCMonth() + 1; //months from 1-12
+var day = dateObj.getUTCDate();
+var year = dateObj.getUTCFullYear();
+let dateRec = year+"-"+month+"-"+day;
+    let x = JSON.parse(body);// Print the HTML for the Google homepage.
+    if(x){
+        let objectData = x.News.filter((ele)=>ele.published_date ==dateRec);
+           News.insertMany(objectData,(err,data)=>{
+            if (err) {
+        //      res.status(500).json({error:"Error -> " + err});
+          }
+        //  res.send( "success").status(200);
+           })
+
+    }
+  });
+ }
+ function getAllSports(){
+  Request('https://newsapi.in/newsapi/news.php?key=05t00FVJ5AUMTycgVMstSqxLv4Z4dc&category=tamil_sports', function (error, response, body) {
+    console.error('error:', error); // Print the error if one occurred
+   // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+  //  console.log('body:', JSON.parse(body)); 
+    var dateObj = new Date();
+var month = dateObj.getUTCMonth() + 1; //months from 1-12
+var day = dateObj.getUTCDate();
+var year = dateObj.getUTCFullYear();
+let dateRec = year+"-"+month+"-"+day;
+    let x = JSON.parse(body);// Print the HTML for the Google homepage.
+    if(x){
+        let objectData = x.News.filter((ele)=>ele.published_date ==dateRec);
+           Sports.insertMany(objectData,(err,data)=>{
+            if (err) {
+         //     res.status(500).json({error:"Error -> " + err});
+          }
+         // res.send( "success").status(200);
+           })
+
+    }
+  });
+ }
+ function getAllBusiness(){
+  Request('https://newsapi.in/newsapi/news.php?key=05t00FVJ5AUMTycgVMstSqxLv4Z4dc&category=tamil_business', function (error, response, body) {
+    console.error('error:', error); // Print the error if one occurred
+   // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+   // console.log('body:', JSON.parse(body)); 
+    var dateObj = new Date();
+var month = dateObj.getUTCMonth() + 1; //months from 1-12
+var day = dateObj.getUTCDate();
+var year = dateObj.getUTCFullYear();
+let dateRec = year+"-"+month+"-"+day;
+    let x = JSON.parse(body);// Print the HTML for the Google homepage.
+    if(x){
+        let objectData = x.News.filter((ele)=>ele.published_date ==dateRec);
+           Business.insertMany(objectData,(err,data)=>{
+            if (err) {
+        //      res.status(500).json({error:"Error -> " + err});
+          }
+        //  res.send( "success").status(200);
+           })
+
+    }
+  });
+ }
+ function getAllPolitics(){
+  Request('https://newsapi.in/newsapi/news.php?key=05t00FVJ5AUMTycgVMstSqxLv4Z4dc&category=tamil_politics', function (error, response, body) {
+    console.error('error:', error); // Print the error if one occurred
+   // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+    //console.log('body:', JSON.parse(body)); 
+    var dateObj = new Date();
+var month = dateObj.getUTCMonth() + 1; //months from 1-12
+var day = dateObj.getUTCDate();
+var year = dateObj.getUTCFullYear();
+let dateRec = year+"-"+month+"-"+day;
+    let x = JSON.parse(body);// Print the HTML for the Google homepage.
+    if(x){
+        let objectData = x.News.filter((ele)=>ele.published_date ==dateRec);
+           Politics.insertMany(objectData,(err,data)=>{
+            if (err) {
+            //  res.status(500).json({error:"Error -> " + err});
+          }
+        //  res.send( "success").status(200);
+           })
+
+    }
+  });
+ }
+
+   app.post('/news',(req,res)=>{
+     getAllNews();
+     getAllSports();
+     getAllBusiness();
+     getAllPolitics();
+  res.json({status:200,msg:"Success"});
+   });
 
 app.post('/api/file/upload',(req,res) => {
   console.log("123",req.files);
 
   const params = uploadParams;
-console.log("log",req.file,req.files);
   uploadParams.Key = req.files[0].originalname;
   uploadParams.ContentType = req.files[0].mimetype;
 var file = req.files[0];
