@@ -109,7 +109,7 @@ var job = new CronJob('00 01 6 * * *', function() {
 job.start();
 
 app.get('/newsall',(req,res)=>{
-  News.find({},(err,data)=>{
+  News.find({},{},{sort:{"_id":-1}},(err,data)=>{
     if (err) {
       res.status(500).json({error:"Error -> " + err});
   }
@@ -118,7 +118,7 @@ app.get('/newsall',(req,res)=>{
  })
 
  app.get('/newssports',(req,res)=>{
-  Sports.find({},(err,data)=>{
+  Sports.find({},{},{sort:{"_id":-1}},(err,data)=>{
     if (err) {
       res.status(500).json({error:"Error -> " + err});
   }
@@ -126,7 +126,7 @@ app.get('/newsall',(req,res)=>{
    })
  })
  app.get('/newsbusiness',(req,res)=>{
-  Business.find({},(err,data)=>{
+  Business.find({},{},{sort:{"_id":-1}},(err,data)=>{
     if (err) {
       res.status(500).json({error:"Error -> " + err});
   }
@@ -134,7 +134,7 @@ app.get('/newsall',(req,res)=>{
    })
  })
  app.get('/newspolitics',(req,res)=>{
-  Politics.find({},(err,data)=>{
+  Politics.find({},{},{sort:{"_id":-1}},(err,data)=>{
     if (err) {
       res.status(500).json({error:"Error -> " + err});
   }
