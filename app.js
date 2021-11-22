@@ -105,11 +105,11 @@ var job = new CronJob('00 01 6 * * *', function() {
   getAllBusiness();
   getAllPolitics();
 
-}, null, true, 'America/Los_Angeles');
+}, null, true, 'Asia/Kolkata');
 job.start();
 
 app.get('/newsall',(req,res)=>{
-  News.find({},{},{sort:{"_id":-1}},(err,data)=>{
+  News.find({},{},{sort:{"_id":-1},limit:150},(err,data)=>{
     if (err) {
       res.status(500).json({error:"Error -> " + err});
   }
@@ -118,7 +118,7 @@ app.get('/newsall',(req,res)=>{
  })
 
  app.get('/newssports',(req,res)=>{
-  Sports.find({},{},{sort:{"_id":-1}},(err,data)=>{
+  Sports.find({},{},{sort:{"_id":-1},limit:50},(err,data)=>{
     if (err) {
       res.status(500).json({error:"Error -> " + err});
   }
@@ -126,7 +126,7 @@ app.get('/newsall',(req,res)=>{
    })
  })
  app.get('/newsbusiness',(req,res)=>{
-  Business.find({},{},{sort:{"_id":-1}},(err,data)=>{
+  Business.find({},{},{sort:{"_id":-1},limit:50},(err,data)=>{
     if (err) {
       res.status(500).json({error:"Error -> " + err});
   }
@@ -134,7 +134,7 @@ app.get('/newsall',(req,res)=>{
    })
  })
  app.get('/newspolitics',(req,res)=>{
-  Politics.find({},{},{sort:{"_id":-1}},(err,data)=>{
+  Politics.find({},{},{sort:{"_id":-1},limit:50},(err,data)=>{
     if (err) {
       res.status(500).json({error:"Error -> " + err});
   }
