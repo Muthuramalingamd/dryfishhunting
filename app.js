@@ -108,6 +108,8 @@ var job = new CronJob('00 01 6 * * *', function() {
 }, null, true, 'Asia/Kolkata');
 job.start();
 
+
+
 app.get('/newsall',(req,res)=>{
   News.find({},{},{sort:{"_id":-1},limit:150},(err,data)=>{
     if (err) {
@@ -146,14 +148,15 @@ app.get('/newsall',(req,res)=>{
 
  function getAllNews(){
   Request('https://newsapi.in/newsapi/news.php?key=05t00FVJ5AUMTycgVMstSqxLv4Z4dc&category=tamil', function (error, response, body) {
-    console.error('error:', error); // Print the error if one occurred
+  //  console.error('error:', error); // Print the error if one occurred
   //  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
   //  console.log('body:', JSON.parse(body)); 
     var dateObj = new Date();
-var month = dateObj.getUTCMonth() + 1; //months from 1-12
-var day = dateObj.getUTCDate();
+    var result = dateObj.toISOString().split('T')[0];
+
+console.log("--result",result);
 var year = dateObj.getUTCFullYear();
-let dateRec = year+"-"+month+"-"+day;
+let dateRec = result;
     let x = JSON.parse(body);// Print the HTML for the Google homepage.
     if(x){
         let objectData = x.News.filter((ele)=>ele.published_date ==dateRec);
@@ -169,14 +172,14 @@ let dateRec = year+"-"+month+"-"+day;
  }
  function getAllSports(){
   Request('https://newsapi.in/newsapi/news.php?key=05t00FVJ5AUMTycgVMstSqxLv4Z4dc&category=tamil_sports', function (error, response, body) {
-    console.error('error:', error); // Print the error if one occurred
+   // console.error('error:', error); // Print the error if one occurred
    // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
   //  console.log('body:', JSON.parse(body)); 
     var dateObj = new Date();
-var month = dateObj.getUTCMonth() + 1; //months from 1-12
-var day = dateObj.getUTCDate();
+    var result = dateObj.toISOString().split('T')[0];
+
 var year = dateObj.getUTCFullYear();
-let dateRec = year+"-"+month+"-"+day;
+let dateRec = result;
     let x = JSON.parse(body);// Print the HTML for the Google homepage.
     if(x){
         let objectData = x.News.filter((ele)=>ele.published_date ==dateRec);
@@ -192,14 +195,15 @@ let dateRec = year+"-"+month+"-"+day;
  }
  function getAllBusiness(){
   Request('https://newsapi.in/newsapi/news.php?key=05t00FVJ5AUMTycgVMstSqxLv4Z4dc&category=tamil_business', function (error, response, body) {
-    console.error('error:', error); // Print the error if one occurred
+//    console.error('error:', error); // Print the error if one occurred
    // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
    // console.log('body:', JSON.parse(body)); 
     var dateObj = new Date();
-var month = dateObj.getUTCMonth() + 1; //months from 1-12
-var day = dateObj.getUTCDate();
+    var result = dateObj.toISOString().split('T')[0];
+
+
 var year = dateObj.getUTCFullYear();
-let dateRec = year+"-"+month+"-"+day;
+let dateRec = result;
     let x = JSON.parse(body);// Print the HTML for the Google homepage.
     if(x){
         let objectData = x.News.filter((ele)=>ele.published_date ==dateRec);
@@ -215,14 +219,14 @@ let dateRec = year+"-"+month+"-"+day;
  }
  function getAllPolitics(){
   Request('https://newsapi.in/newsapi/news.php?key=05t00FVJ5AUMTycgVMstSqxLv4Z4dc&category=tamil_politics', function (error, response, body) {
-    console.error('error:', error); // Print the error if one occurred
+   // console.error('error:', error); // Print the error if one occurred
    // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
     //console.log('body:', JSON.parse(body)); 
     var dateObj = new Date();
-var month = dateObj.getUTCMonth() + 1; //months from 1-12
-var day = dateObj.getUTCDate();
+    var result = dateObj.toISOString().split('T')[0];
+
 var year = dateObj.getUTCFullYear();
-let dateRec = year+"-"+month+"-"+day;
+let dateRec = result;
     let x = JSON.parse(body);// Print the HTML for the Google homepage.
     if(x){
         let objectData = x.News.filter((ele)=>ele.published_date ==dateRec);
