@@ -104,9 +104,336 @@ var job = new CronJob('00 01 6 * * *', function() {
   getAllSports();
   getAllBusiness();
   getAllPolitics();
+  News.findOne({},{},{sort:{"_id":-1},limit:1},(err,data)=>{
+    if (err) {
+      console.log("error-->",error)
+  }else{
+    var jipp =data.title;
+    //var jj = jipp.bold();
+    var testheloo = jipp+" \n\n "+" \n\n "+data.url;
+    var options = { method: 'POST',
+      url: 'https://graph.facebook.com/100153105841678/photos',
+      qs: 
+       { url: data.image,
+         message: testheloo,
+         access_token: 'EAAEvlg98QasBAHgtN9QuDU1AZBeTaSx2BW0LPwTWzgydOxXXJA42Xd1GcrKYpHzZBurLfBLA64tXEd35uS6scXTUZAuhCKHEDcJzsl8YqaZAqMsmyGK6pTqkDGphwHz7TZAzT67PHXJiGcZCuW9Sibv6ND1bIjpjyDFIFG6ZCnicVt0CXOUzH5G' },
+      headers: 
+       { 'postman-token': '115c6499-87df-858a-b984-1d4a87b44b37',
+         'cache-control': 'no-cache' } };
+    
+    Request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+    
+      console.log(body);
+    });
+    
+  }
+ 
+   })
 
+   Sports.findOne({},{},{sort:{"_id":-1},limit:1},(err,data)=>{
+    if (err) {
+      console.log("error-->",error)
+  }else{
+    var jipp =data.title;
+    //var jj = jipp.bold();
+    var testheloo = jipp+" \n\n "+" \n\n "+data.url;
+    var options = { method: 'POST',
+      url: 'https://graph.facebook.com/100153105841678/photos',
+      qs: 
+       { url: data.image,
+         message: testheloo,
+         access_token: 'EAAEvlg98QasBAHgtN9QuDU1AZBeTaSx2BW0LPwTWzgydOxXXJA42Xd1GcrKYpHzZBurLfBLA64tXEd35uS6scXTUZAuhCKHEDcJzsl8YqaZAqMsmyGK6pTqkDGphwHz7TZAzT67PHXJiGcZCuW9Sibv6ND1bIjpjyDFIFG6ZCnicVt0CXOUzH5G' },
+      headers: 
+       { 'postman-token': '115c6499-87df-858a-b984-1d4a87b44b37',
+         'cache-control': 'no-cache' } };
+    
+    Request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+    
+      console.log(body);
+    });
+    
+  }
+ 
+   })
+
+   Business.findOne({},{},{sort:{"_id":-1},limit:1},(err,data)=>{
+    if (err) {
+      console.log("error-->",error)
+  }else{
+    var jipp =data.title;
+    //var jj = jipp.bold();
+    var testheloo = jipp+" \n\n "+" \n\n "+data.url;
+    var options = { method: 'POST',
+      url: 'https://graph.facebook.com/100153105841678/photos',
+      qs: 
+       { url: data.image,
+         message: testheloo,
+         access_token: 'EAAEvlg98QasBAHgtN9QuDU1AZBeTaSx2BW0LPwTWzgydOxXXJA42Xd1GcrKYpHzZBurLfBLA64tXEd35uS6scXTUZAuhCKHEDcJzsl8YqaZAqMsmyGK6pTqkDGphwHz7TZAzT67PHXJiGcZCuW9Sibv6ND1bIjpjyDFIFG6ZCnicVt0CXOUzH5G' },
+      headers: 
+       { 'postman-token': '115c6499-87df-858a-b984-1d4a87b44b37',
+         'cache-control': 'no-cache' } };
+    
+    Request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+    
+      console.log(body);
+    });
+    
+  }
+ 
+   })
+   Politics.findOne({},{},{sort:{"_id":-1},limit:1},(err,data)=>{
+    if (err) {
+      console.log("error-->",error)
+  }else{
+    var jipp =data.title;
+    //var jj = jipp.bold();
+    var testheloo = jipp+" \n\n "+" \n\n "+data.url;
+    var options = { method: 'POST',
+      url: 'https://graph.facebook.com/100153105841678/photos',
+      qs: 
+       { url: data.image,
+         message: testheloo,
+         access_token: 'EAAEvlg98QasBAHgtN9QuDU1AZBeTaSx2BW0LPwTWzgydOxXXJA42Xd1GcrKYpHzZBurLfBLA64tXEd35uS6scXTUZAuhCKHEDcJzsl8YqaZAqMsmyGK6pTqkDGphwHz7TZAzT67PHXJiGcZCuW9Sibv6ND1bIjpjyDFIFG6ZCnicVt0CXOUzH5G' },
+      headers: 
+       { 'postman-token': '115c6499-87df-858a-b984-1d4a87b44b37',
+         'cache-control': 'no-cache' } };
+    
+    Request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+    
+      console.log(body);
+    });
+    
+  }
+ 
+   })
 }, null, true, 'Asia/Kolkata');
 job.start();
+
+var job2 = new CronJob('00 02 22 * * *', function() {
+  console.log("jioo---")
+  News.findOne({},{},{sort:{"_id":-1},limit:1,skip:2},(err,data)=>{
+    if (err) {
+      console.log("error-->",error)
+  }else{
+    var jipp =data.title;
+    //var jj = jipp.bold();
+    var testheloo = jipp+" \n\n "+" \n\n "+data.url;
+    var options = { method: 'POST',
+      url: 'https://graph.facebook.com/100153105841678/photos',
+      qs: 
+       { url: data.image,
+         message: testheloo,
+         access_token: 'EAAEvlg98QasBAHgtN9QuDU1AZBeTaSx2BW0LPwTWzgydOxXXJA42Xd1GcrKYpHzZBurLfBLA64tXEd35uS6scXTUZAuhCKHEDcJzsl8YqaZAqMsmyGK6pTqkDGphwHz7TZAzT67PHXJiGcZCuW9Sibv6ND1bIjpjyDFIFG6ZCnicVt0CXOUzH5G' },
+      headers: 
+       { 'postman-token': '115c6499-87df-858a-b984-1d4a87b44b37',
+         'cache-control': 'no-cache' } };
+    
+    Request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+    
+      console.log(body);
+    });
+    
+  }
+ 
+   })
+
+   Sports.findOne({},{},{sort:{"_id":-1},limit:1,skip:2},(err,data)=>{
+    if (err) {
+      console.log("error-->",error)
+  }else{
+    var jipp =data.title;
+    //var jj = jipp.bold();
+    var testheloo = jipp+" \n\n "+" \n\n "+data.url;
+    var options = { method: 'POST',
+      url: 'https://graph.facebook.com/100153105841678/photos',
+      qs: 
+       { url: data.image,
+         message: testheloo,
+         access_token: 'EAAEvlg98QasBAHgtN9QuDU1AZBeTaSx2BW0LPwTWzgydOxXXJA42Xd1GcrKYpHzZBurLfBLA64tXEd35uS6scXTUZAuhCKHEDcJzsl8YqaZAqMsmyGK6pTqkDGphwHz7TZAzT67PHXJiGcZCuW9Sibv6ND1bIjpjyDFIFG6ZCnicVt0CXOUzH5G' },
+      headers: 
+       { 'postman-token': '115c6499-87df-858a-b984-1d4a87b44b37',
+         'cache-control': 'no-cache' } };
+    
+    Request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+    
+      console.log(body);
+    });
+    
+  }
+ 
+   })
+
+   Business.findOne({},{},{sort:{"_id":-1},limit:1,skip:2},(err,data)=>{
+    if (err) {
+      console.log("error-->",error)
+  }else{
+    var jipp =data.title;
+    //var jj = jipp.bold();
+    var testheloo = jipp+" \n\n "+" \n\n "+data.url;
+    var options = { method: 'POST',
+      url: 'https://graph.facebook.com/100153105841678/photos',
+      qs: 
+       { url: data.image,
+         message: testheloo,
+         access_token: 'EAAEvlg98QasBAHgtN9QuDU1AZBeTaSx2BW0LPwTWzgydOxXXJA42Xd1GcrKYpHzZBurLfBLA64tXEd35uS6scXTUZAuhCKHEDcJzsl8YqaZAqMsmyGK6pTqkDGphwHz7TZAzT67PHXJiGcZCuW9Sibv6ND1bIjpjyDFIFG6ZCnicVt0CXOUzH5G' },
+      headers: 
+       { 'postman-token': '115c6499-87df-858a-b984-1d4a87b44b37',
+         'cache-control': 'no-cache' } };
+    
+    Request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+    
+      console.log(body);
+    });
+    
+  }
+ 
+   })
+   Politics.findOne({},{},{sort:{"_id":-1},limit:1,skip:2},(err,data)=>{
+    if (err) {
+      console.log("error-->",error)
+  }else{
+    var jipp =data.title;
+    //var jj = jipp.bold();
+    var testheloo = jipp+" \n\n "+" \n\n "+data.url;
+    var options = { method: 'POST',
+      url: 'https://graph.facebook.com/100153105841678/photos',
+      qs: 
+       { url: data.image,
+         message: testheloo,
+         access_token: 'EAAEvlg98QasBAHgtN9QuDU1AZBeTaSx2BW0LPwTWzgydOxXXJA42Xd1GcrKYpHzZBurLfBLA64tXEd35uS6scXTUZAuhCKHEDcJzsl8YqaZAqMsmyGK6pTqkDGphwHz7TZAzT67PHXJiGcZCuW9Sibv6ND1bIjpjyDFIFG6ZCnicVt0CXOUzH5G' },
+      headers: 
+       { 'postman-token': '115c6499-87df-858a-b984-1d4a87b44b37',
+         'cache-control': 'no-cache' } };
+    
+    Request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+    
+      console.log(body);
+    });
+    
+  }
+ 
+   })
+}, null, true, 'Asia/Kolkata');
+var job1 = new CronJob('00 01 13 * * *', function() {
+  console.log("jioo---")
+  News.findOne({},{},{sort:{"_id":-1},limit:1,skip:1},(err,data)=>{
+    if (err) {
+      console.log("error-->",error)
+  }else{
+    var jipp =data.title;
+    //var jj = jipp.bold();
+    var testheloo = jipp+" \n\n "+" \n\n "+data.url;
+    var options = { method: 'POST',
+      url: 'https://graph.facebook.com/100153105841678/photos',
+      qs: 
+       { url: data.image,
+         message: testheloo,
+         access_token: 'EAAEvlg98QasBAHgtN9QuDU1AZBeTaSx2BW0LPwTWzgydOxXXJA42Xd1GcrKYpHzZBurLfBLA64tXEd35uS6scXTUZAuhCKHEDcJzsl8YqaZAqMsmyGK6pTqkDGphwHz7TZAzT67PHXJiGcZCuW9Sibv6ND1bIjpjyDFIFG6ZCnicVt0CXOUzH5G' },
+      headers: 
+       { 'postman-token': '115c6499-87df-858a-b984-1d4a87b44b37',
+         'cache-control': 'no-cache' } };
+    
+    Request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+    
+      console.log(body);
+    });
+    
+  }
+ 
+   })
+
+   Sports.findOne({},{},{sort:{"_id":-1},limit:1,skip:1},(err,data)=>{
+    if (err) {
+      console.log("error-->",error)
+  }else{
+    var jipp =data.title;
+    //var jj = jipp.bold();
+    var testheloo = jipp+" \n\n "+" \n\n "+data.url;
+    var options = { method: 'POST',
+      url: 'https://graph.facebook.com/100153105841678/photos',
+      qs: 
+       { url: data.image,
+         message: testheloo,
+         access_token: 'EAAEvlg98QasBAHgtN9QuDU1AZBeTaSx2BW0LPwTWzgydOxXXJA42Xd1GcrKYpHzZBurLfBLA64tXEd35uS6scXTUZAuhCKHEDcJzsl8YqaZAqMsmyGK6pTqkDGphwHz7TZAzT67PHXJiGcZCuW9Sibv6ND1bIjpjyDFIFG6ZCnicVt0CXOUzH5G' },
+      headers: 
+       { 'postman-token': '115c6499-87df-858a-b984-1d4a87b44b37',
+         'cache-control': 'no-cache' } };
+    
+    Request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+    
+      console.log(body);
+    });
+    
+  }
+ 
+   })
+
+   Business.findOne({},{},{sort:{"_id":-1},limit:1,skip:1},(err,data)=>{
+    if (err) {
+      console.log("error-->",error)
+  }else{
+    var jipp =data.title;
+    //var jj = jipp.bold();
+    var testheloo = jipp+" \n\n "+" \n\n "+data.url;
+    var options = { method: 'POST',
+      url: 'https://graph.facebook.com/100153105841678/photos',
+      qs: 
+       { url: data.image,
+         message: testheloo,
+         access_token: 'EAAEvlg98QasBAHgtN9QuDU1AZBeTaSx2BW0LPwTWzgydOxXXJA42Xd1GcrKYpHzZBurLfBLA64tXEd35uS6scXTUZAuhCKHEDcJzsl8YqaZAqMsmyGK6pTqkDGphwHz7TZAzT67PHXJiGcZCuW9Sibv6ND1bIjpjyDFIFG6ZCnicVt0CXOUzH5G' },
+      headers: 
+       { 'postman-token': '115c6499-87df-858a-b984-1d4a87b44b37',
+         'cache-control': 'no-cache' } };
+    
+    Request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+    
+      console.log(body);
+    });
+    
+  }
+ 
+   })
+   Politics.findOne({},{},{sort:{"_id":-1},limit:1,skip:1},(err,data)=>{
+    if (err) {
+      console.log("error-->",error)
+  }else{
+    var jipp =data.title;
+    //var jj = jipp.bold();
+    var testheloo = jipp+" \n\n "+" \n\n "+data.url;
+    var options = { method: 'POST',
+      url: 'https://graph.facebook.com/100153105841678/photos',
+      qs: 
+       { url: data.image,
+         message: testheloo,
+         access_token: 'EAAEvlg98QasBAHgtN9QuDU1AZBeTaSx2BW0LPwTWzgydOxXXJA42Xd1GcrKYpHzZBurLfBLA64tXEd35uS6scXTUZAuhCKHEDcJzsl8YqaZAqMsmyGK6pTqkDGphwHz7TZAzT67PHXJiGcZCuW9Sibv6ND1bIjpjyDFIFG6ZCnicVt0CXOUzH5G' },
+      headers: 
+       { 'postman-token': '115c6499-87df-858a-b984-1d4a87b44b37',
+         'cache-control': 'no-cache' } };
+    
+    Request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+    
+      console.log(body);
+    });
+    
+  }
+ 
+   })
+}, null, true, 'Asia/Kolkata');
+job2.start();
+job1.start();
+
 
 
 
