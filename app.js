@@ -90,7 +90,7 @@ var EngPolitics = require('./eng_politics');
 
 var Business = require('./business');
 var EngBusiness = require('./eng_business');
-
+var Device = require('./device');
 
 var Order = require('./order');
 var Address = require('./address');
@@ -386,7 +386,29 @@ var job1 = new CronJob('00 01 13 * * *', function() {
 job2.start();
 job1.start();
 
-
+//device
+app.get('/device',(req,res)=>{
+  console.log("ll--",req.query.id);
+  Device.findOne({title:req.query.id},(err,data)=>{
+    if (err) {
+      res.status(500).json({error:"Error -> " + err});
+  }
+  if(data){
+    res.status(200).json({status:200,msg:data});
+  }else{
+    res.status(200).json({status:201,msg:data});
+  }
+ 
+   })
+ })
+app.post('/device',(req,res)=>{
+  Device.create(req.body,(err,data)=>{
+    if (err) {
+      res.status(500).json({error:"Error -> " + err});
+  }
+  res.status(200).json({status:200,msg:data});
+   })
+ })
 //tamil news 
 
 app.get('/tamil/newsall',(req,res)=>{
