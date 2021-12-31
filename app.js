@@ -157,13 +157,13 @@ var job2 = new CronJob('00 05 09 * * *',  function() {
   getAllEngWorldNews();
 }, null, true, 'Asia/Kolkata');
 job2.start();
-var job1 = new CronJob('00 36 10 * * *', function() {
-  getAllNews();
+// var job1 = new CronJob('00 36 10 * * *', function() {
+// //  getAllNews();
 
 
 
   
-}, null, true, 'Asia/Kolkata');
+// }, null, true, 'Asia/Kolkata');
 //job2.start();
 //job1.start();
 
